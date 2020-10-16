@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
-import {RectButton} from 'react-native-gesture-handler';
 import {colors} from '../../constants';
+import FastImage from 'react-native-fast-image';
 
 export const Image = styled.ImageBackground`
   height: 160px;
   width: 100%;
-  margin: auto;
   margin-top: 10px;
-  background-color: ${colors.light}
+  background-color: ${colors.medium + '11'};
 `;
 
 export const Button = styled.TouchableOpacity.attrs({
