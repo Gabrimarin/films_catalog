@@ -44,7 +44,12 @@ const CategoryList = () => {
       key={item.id}
       title={item.name}
       navigation={navigation}
-      onPress={() => navigation.navigate('MovieList')}
+      onPress={() =>
+        navigation.navigate('MovieList', {
+          genreId: item.id,
+          origin: 'category',
+        })
+      }
     />
   );
 
