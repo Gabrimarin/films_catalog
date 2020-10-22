@@ -1,12 +1,10 @@
 import styled from 'styled-components/native';
-import {colors} from '../../constants';
-import FastImage from 'react-native-fast-image';
 
 export const Image = styled.ImageBackground`
   height: 160px;
   width: 100%;
   margin-top: 10px;
-  background-color: ${colors.medium + '11'};
+  background-color: ${(props) => props.theme.theme.SECONDARY_TEXT_COLOR + '11'};
 `;
 
 export const Button = styled.TouchableOpacity.attrs({
@@ -19,7 +17,7 @@ export const Button = styled.TouchableOpacity.attrs({
 
 export const Title = styled.Text`
   color: white;
-  font-size: 30px;
+  font-size: ${props => 35 + props.theme.delta}px;
   margin-top: auto;
   font-weight: bold;
 `;

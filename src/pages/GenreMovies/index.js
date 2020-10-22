@@ -3,13 +3,15 @@ import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {GET_POSTER_PATH} from '../../constants/routes';
 import RestServices from '../../services/api';
-import ListFooter from '../ListFooter';
-import LoadingComponent from '../LoadingComponent';
-import MovieListItem from '../MovieListItem';
-import ScreenContainer from '../ScreenContainer';
+import {
+  ListFooter,
+  LoadingComponent,
+  MovieListItem,
+  ScreenContainer,
+} from '../../components';
 const Rest = new RestServices();
 
-const MovieList = ({title}) => {
+const GenreMovies = ({title}) => {
   const navigation = useNavigation();
   const {params} = useRoute();
   const [movies, setMovies] = useState([]);
@@ -58,7 +60,7 @@ const MovieList = ({title}) => {
       id={item.movieId}
       year={item.year}
       onPress={() =>
-        navigation.navigate('GenreMovies', {
+        navigation.navigate('MovieView', {
           id: item.movieId,
         })
       }
@@ -88,4 +90,4 @@ const MovieList = ({title}) => {
   );
 };
 
-export default MovieList;
+export default GenreMovies;

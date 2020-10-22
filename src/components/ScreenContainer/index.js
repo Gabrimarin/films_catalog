@@ -1,15 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
+import {withTheme} from 'styled-components';
+import {AccessibilityOptions, Header} from '..';
+import {useNavigation} from '@react-navigation/native';
 
-// import { Container } from './styles';
-
-const ScreenContainer = ({children}) => {
+const ScreenContainer = ({
+  children,
+  title,
+  backHidden,
+  headerHidden,
+  showFavourites,
+  theme,
+}) => {
+  const [accessibilityModal, setAccessibilityModal] = useState(false);
+  const navigation = useNavigation();
   return (
     <>
-      <StatusBar />
-      <SafeAreaView style={{padding: 5}}>{children}</SafeAreaView>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={theme.theme.SECONDARY_BACKGROUND_COLOR}
+      />
+      <SafeAreaView
+        style={{
+          backgroundColor: theme.theme.PRIMARY_BACKGROUND_COLOR,
+          flex: 1,
+        }}>
+        {!headerHidden && (
+          <Header
+            onBackPress={backHidden ? null : () => navigation.goBack()}
+            title={title}
+            showFavourites={showFavourites}
+            onAccessibilityPress={() => setAccessibilityModal(true)}
+          />
+        )}
+        {children}
+        <AccessibilityOptions
+          isVisible={accessibilityModal}
+          onClose={() => setAccessibilityModal(false)}
+        />
+      </SafeAreaView>
     </>
   );
 };
 
-export default ScreenContainer;
+export default withTheme(ScreenContainer);

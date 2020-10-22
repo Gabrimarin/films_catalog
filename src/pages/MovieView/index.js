@@ -1,8 +1,8 @@
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {colors} from '../../constants';
+import {HEADER_HEIGHT} from '../../constants';
 import {GET_POSTER_PATH} from '../../constants/routes';
 import RestServices from '../../services/api';
 import ImageView from 'react-native-image-view';
@@ -21,22 +21,25 @@ import {
   TagLine,
 } from './styles';
 import {Dimensions} from 'react-native';
-
+import {AccessibilityOptions, Header, LoadingComponent} from '../../components';
+import {withTheme} from 'styled-components';
 const Rest = new RestServices();
 
 const stickyHeaderHeight = 80;
 
-const MovieView = () => {
+const MovieView = ({theme}) => {
+  const navigation = useNavigation();
   const {params} = useRoute();
   const [movieData, setMovieData] = useState({});
   const [isPosterVisible, setIsPosterVisible] = useState(false);
-  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [accessibilityModal, setAccessibilityModal] = useState(false);
 
   useEffect(() => {
     async function getMovies() {
       const response = await Rest.getMovie(params.id);
       setMovieData(response);
-      console.log(response);
+      setLoading(false);
     }
     getMovies();
   }, []);
@@ -52,10 +55,18 @@ const MovieView = () => {
     return genresString;
   };
 
-  return (
+  return loading ? (
+    <LoadingComponent />
+  ) : (
     <>
+      <Header
+        onBackPress={() => navigation.goBack()}
+        onAccessibilityPress={() => setAccessibilityModal(true)}
+      />
       <ParallaxScrollView
-        backgroundColor={'#ffffff00'}
+        style={{backgroundColor: '#000', flex: 1}}
+        backgroundColor={'#00000000'}
+        contentBackgroundColor={theme.theme.PRIMARY_BACKGROUND_COLOR}
         renderBackground={() => (
           <Poster
             source={{uri: GET_POSTER_PATH(movieData.poster_path)}}
@@ -75,24 +86,18 @@ const MovieView = () => {
         renderForeground={() => (
           <LinearGradient
             colors={[
-              colors.dark + '00',
-              colors.dark + '55',
-              colors.dark + 'ff',
+              theme.theme.SECONDARY_TEXT_BACKGROUND_COLOR + '00',
+              theme.theme.SECONDARY_TEXT_BACKGROUND_COLOR + 'ff',
             ]}
             style={{
               height: '100%',
               justifyContent: 'flex-end',
               padding: 12,
             }}>
-            <ViewPosterButton
-              name="remove-red-eye"
-              size={35}
-              color="white"
-              onPress={() => setIsPosterVisible(true)}
-            />
+            <ViewPosterButton onPress={() => setIsPosterVisible(true)} />
             <Title color={'white'}>{movieData.original_title}</Title>
             <SubText color={'white'}>
-              {movieData?.genres?.[0]?.name || 'LOAD'}
+              {movieData?.genres?.[0]?.name && getGenresText(movieData.genres)}
             </SubText>
           </LinearGradient>
         )}>
@@ -100,22 +105,18 @@ const MovieView = () => {
           <FormRow>
             <Label>Overview:</Label>
             <SinopseView expanded={true}>
-              <FormText>{movieData.overview}</FormText>
+              <FormText expanded={true}>{movieData.overview}</FormText>
             </SinopseView>
-            <ViewMoreIcon
-              name="expand-more"
-              size={35}
-              color="black"
-              onPress={() => setIsOverviewExpanded((prev) => !prev)}
-            />
           </FormRow>
           <FormRow>
-            <Label>Release Year</Label>
-            <FormText>{movieData.release_date}</FormText>
+            <Label>Release Date</Label>
+            <FormText>{movieData.release_date.split('-').join('/')}</FormText>
           </FormRow>
-          <FormRow>
-            <TagLine>"{movieData.tagline}"</TagLine>
-          </FormRow>
+          {movieData.tagline.length > 0 && (
+            <FormRow accessibilityLabel={`Movie Tagline: ${movieData.tagline}`}>
+              <TagLine>{`"${movieData.tagline}"`}</TagLine>
+            </FormRow>
+          )}
         </DetailsContainer>
       </ParallaxScrollView>
       <ImageView
@@ -133,8 +134,12 @@ const MovieView = () => {
         isVisible={isPosterVisible}
         onClose={() => setIsPosterVisible(false)}
       />
+      <AccessibilityOptions
+        isVisible={accessibilityModal}
+        onClose={() => setAccessibilityModal(false)}
+      />
     </>
   );
 };
 
-export default MovieView;
+export default withTheme(MovieView);

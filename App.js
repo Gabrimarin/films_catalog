@@ -6,22 +6,25 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {Component} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaView, StatusBar} from 'react-native';
-import {CategoryList, SearchBar} from './src/components';
 import MainStack from './src/navigation/MainStack';
+import {Provider} from 'react-redux';
+import {Persistor, Store} from './src/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import ContrastThemeProvider from './src/styles/ThemeProvider';
+
 const App = () => {
   return (
-    <NavigationContainer>
-      {/* <>
-
-          {/* <MovieList />
-          <SearchBar /> */}
-          <MainStack />
-        {/* </SafeAreaView>
-      </> */}
-    </NavigationContainer>
+    <Provider store={Store}>
+      <PersistGate loading={null} persistor={Persistor}>
+        <ContrastThemeProvider>
+          <NavigationContainer>
+            <MainStack />
+          </NavigationContainer>
+        </ContrastThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 

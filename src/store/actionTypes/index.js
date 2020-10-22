@@ -1,0 +1,2 @@
+export const MODIFY_FONT_SIZE = 'MODIFY_FONT_SIZE';
+export const SWITCH_THEME = 'SWITCH_THEME';
