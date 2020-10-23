@@ -13,7 +13,7 @@ const CategoryList = ({data}) => {
       title={item.name}
       navigation={navigation}
       onPress={() =>
-        navigation.navigate('MovieList', {
+        navigation.navigate('GenreMovies', {
           genreId: item.id,
           origin: 'category',
           title: item.name,

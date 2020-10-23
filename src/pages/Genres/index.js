@@ -4,9 +4,7 @@ import RestServices from '../../services/api';
 import {
   CategoryList,
   LoadingComponent,
-  MovieList,
   ScreenContainer,
-  SearchBar,
 } from '../../components';
 import {processApiGenreData} from '../../utils/processData';
 
@@ -16,12 +14,10 @@ const Genres = () => {
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [search, setSearch] = useState('');
 
   const handleError = (response) => {
     setLoading(false);
     setHasError(true);
-    console.log(response);
   };
 
   useEffect(() => {
@@ -45,23 +41,13 @@ const Genres = () => {
       return <LoadingComponent />;
     } else if (hasError) {
       return <Text>Error</Text>;
-    } else if (search.length !== 0) {
-      const Component = () => <MovieList title={search} />;
-      return <Component />;
     } else {
       return <CategoryList data={genres} />;
     }
   };
 
   return (
-    <ScreenContainer title="Movies Catalog" backHidden showFavourites>
-      {!loading && (
-        <SearchBar
-          onChangeText={setSearch}
-          value={search}
-          onPressX={() => setSearch('')}
-        />
-      )}
+    <ScreenContainer title="Movies Catalog" backHidden>
       {renderMainComponent()}
     </ScreenContainer>
   );

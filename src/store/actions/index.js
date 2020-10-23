@@ -1,2 +1,4 @@
 import {switchTheme, modifyFontSize} from './themeActions';
-export {switchTheme, modifyFontSize};
+import {addMovie, deleteMovie} from './favouritesActions';
+
+export {switchTheme, modifyFontSize, addMovie, deleteMovie};

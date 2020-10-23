@@ -27,3 +27,17 @@ export const processApiGenreData = async (apiResponse) => {
   }
   return genresList;
 };
+
+export const processApiMovieList = (apiResponse) => {
+  const moviesList = [];
+  const newMovies = apiResponse;
+  newMovies.forEach((movie) => {
+    let auxObj = {};
+    auxObj.movieId = movie.id;
+    auxObj.posterPath = GET_POSTER_PATH(movie.poster_path);
+    auxObj.year = movie.release_date?.slice(0, 4) || '';
+    auxObj.title = movie.original_title;
+    moviesList.push(auxObj);
+  });
+  return moviesList;
+};

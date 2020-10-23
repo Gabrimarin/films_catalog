@@ -8,11 +8,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import MainStack from './src/navigation/MainStack';
 import {Provider} from 'react-redux';
 import {Persistor, Store} from './src/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import ContrastThemeProvider from './src/styles/ThemeProvider';
+import TabNavigator from './src/navigation/TabNavigator';
 
 const App = () => {
   return (
@@ -20,7 +20,7 @@ const App = () => {
       <PersistGate loading={null} persistor={Persistor}>
         <ContrastThemeProvider>
           <NavigationContainer>
-            <MainStack />
+            <TabNavigator />
           </NavigationContainer>
         </ContrastThemeProvider>
       </PersistGate>

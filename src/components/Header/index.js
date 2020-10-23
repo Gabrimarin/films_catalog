@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {withTheme} from 'styled-components';
@@ -6,14 +5,7 @@ Icon.loadFont();
 
 import {Container, Title, AuxContainer} from './styles';
 
-const Header = ({
-  title,
-  onBackPress,
-  onAccessibilityPress,
-  theme,
-  showFavourites,
-}) => {
-  const navigation = useNavigation();
+const Header = ({title, onBackPress, onAccessibilityPress, theme}) => {
   return (
     <Container>
       <AuxContainer flex={1}>
@@ -23,17 +15,6 @@ const Header = ({
             size={30 + theme.delta}
             color={theme.theme.SECONDARY_TEXT_COLOR}
             onPress={onBackPress}
-            accessibilityComponentType="button"
-            accessibilityLabel="go back"
-            accessibilityHint="Return to previous screen"
-          />
-        )}
-        {showFavourites && (
-          <Icon
-            name="star"
-            size={30 + theme.delta}
-            color={theme.theme.SECONDARY_TEXT_COLOR}
-            onPress={() => navigation.navigate('Favourites')}
             accessibilityComponentType="button"
             accessibilityLabel="go back"
             accessibilityHint="Return to previous screen"

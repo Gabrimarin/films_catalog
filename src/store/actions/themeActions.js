@@ -10,7 +10,6 @@ export const switchTheme = (theme) => {
 };
 
 export const modifyFontSize = (delta) => {
-  console.log(delta)
   return (dispatch) => {
     dispatch({
       type: MODIFY_FONT_SIZE,

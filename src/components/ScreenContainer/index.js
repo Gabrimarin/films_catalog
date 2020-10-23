@@ -9,7 +9,6 @@ const ScreenContainer = ({
   title,
   backHidden,
   headerHidden,
-  showFavourites,
   theme,
 }) => {
   const [accessibilityModal, setAccessibilityModal] = useState(false);
@@ -29,7 +28,6 @@ const ScreenContainer = ({
           <Header
             onBackPress={backHidden ? null : () => navigation.goBack()}
             title={title}
-            showFavourites={showFavourites}
             onAccessibilityPress={() => setAccessibilityModal(true)}
           />
         )}

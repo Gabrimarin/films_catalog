@@ -1,6 +1,10 @@
 import Axios from 'axios';
 import {getGeneralRoute} from '../constants';
-import {GET_OF_GENRE, GET_GENRES, GET_MOVIE_BY_TITLE} from '../constants/routes';
+import {
+  GET_OF_GENRE,
+  GET_GENRES,
+  GET_MOVIE_BY_TITLE,
+} from '../constants/routes';
 
 export default class RestServices {
   async get(route) {
