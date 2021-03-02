@@ -57,9 +57,9 @@ function TabNavigator({theme}) {
     <Tab.Navigator
       tabBarOptions={{
         activeBackgroundColor: theme.theme.SECONDARY_BACKGROUND_COLOR,
-        inactiveBackgroundColor: theme.theme.PRIMARY_BACKGROUND_COLOR,
+        inactiveBackgroundColor: theme.theme.SECONDARY_BACKGROUND_COLOR,
         activeTintColor: theme.theme.SECONDARY_TEXT_COLOR,
-        inactiveTintColor: theme.theme.PRIMARY_TEXT_COLOR,
+        inactiveTintColor: theme.theme.SECONDARY_BACKGROUND_COLOR_LIGHT,
       }}>
       <Tab.Screen
         name="GenresTab"
