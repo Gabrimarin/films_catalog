@@ -7,3 +7,7 @@ Um catálogo de filmes construído em React Native, incluindo:
 - Categorização por gênero;
 - Aba de Favoritos;
 - Detalhes do filme.
+
+### Para iniciar o projeto:
+
+`npx react-native start`
